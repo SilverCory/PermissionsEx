@@ -56,9 +56,13 @@
                   <createDependencyReducedPom>false</createDependencyReducedPom>
                   <relocations>
                     <relocation>
-                      <pattern>net.gravitydevelopment.updater</pattern>
-                      <shadedPattern>ru.tehkode.libs.net.gravitydevelopment.updater</shadedPattern>
+                      <pattern>com.google.common</pattern>
+                      <shadedPattern>ru.tehkode.libs.com.google.common</shadedPattern>
                     </relocation>
+                      <relocation>
+                          <pattern>com.google.thirdparty</pattern>
+                          <shadedPattern>ru.tehkode.libs.com.google.thirdparty</shadedPattern>
+                      </relocation>
                     <relocation>
                       <pattern>org.apache</pattern>
                       <shadedPattern>ru.tehkode.libs.org.apache</shadedPattern>
@@ -133,22 +137,17 @@
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <artifactId>craftbukkitplusplus</artifactId>
+            <version>1.2.5-R4.1-MCPC-SNAPSHOT</version>
             <type>jar</type>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/craftbukkitplusplus-1.2.5-R4.1-MCPC-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>1.9</version>
             <type>jar</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.zachsthings</groupId>
-            <artifactId>netevents</artifactId>
-            <version>1.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -162,16 +161,17 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
         </dependency>
-        <dependency>
-            <groupId>net.gravitydevelopment.updater</groupId>
-            <artifactId>updater</artifactId>
-            <version>LATEST</version>
-        </dependency>
       <dependency>
         <groupId>com.mojang</groupId>
         <artifactId>AccountsClient</artifactId>
         <version>unspecified</version>
       </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>17.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>

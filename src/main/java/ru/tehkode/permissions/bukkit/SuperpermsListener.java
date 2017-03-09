@@ -178,7 +178,7 @@ public class SuperpermsListener implements Listener {
 		if (event.getResult() != PlayerLoginEvent.Result.ALLOWED) {
 			try {
 				removeAttachment(event.getPlayer());
-				Player player = plugin.getServer().getPlayer(event.getPlayer().getUniqueId());
+				Player player = plugin.getServer().getPlayer(event.getPlayer().getName());
 				if (player != null && player.isOnline()) {
 					updateAttachment(player);
 				}

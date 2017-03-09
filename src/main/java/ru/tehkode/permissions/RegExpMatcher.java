@@ -1,12 +1,11 @@
 package ru.tehkode.permissions;
 
+import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 import ru.tehkode.permissions.bukkit.ErrorReport;
 
 import java.util.concurrent.ExecutionException;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -14,7 +13,7 @@ public class RegExpMatcher implements PermissionMatcher {
 	public static final String RAW_REGEX_CHAR = "$";
 	protected static Pattern rangeExpression = Pattern.compile("(\\d+)-(\\d+)");
 
-	private final LoadingCache<String, Pattern> patternCache = CacheBuilder.newBuilder().maximumSize(500).build(new CacheLoader<String, Pattern>() {
+	private final Cache<String, Pattern> patternCache =  CacheBuilder.newBuilder().maximumSize(500).build(new CacheLoader<String, Pattern>() {
 		@Override
 		public Pattern load(String permission) throws Exception {
 			return createPattern(permission);

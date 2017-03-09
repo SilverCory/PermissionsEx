@@ -18,13 +18,6 @@
  */
 package ru.tehkode.permissions.bukkit.commands;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -36,6 +29,8 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 import ru.tehkode.permissions.commands.Command;
 import ru.tehkode.utils.DateUtils;
 import ru.tehkode.utils.StringUtils;
+
+import java.util.*;
 
 public class UserCommands extends PermissionsCommand {
 
@@ -141,13 +136,7 @@ public class UserCommands extends PermissionsCommand {
 	public void userListSuperPermissions(PermissionsEx plugin, CommandSender sender, Map<String, String> args) {
 		String userName = this.autoCompletePlayerName(args.get("user"));
 
-		Player player;
-		try {
-			UUID uid = UUID.fromString(userName);
-			player = plugin.getServer().getPlayer(uid);
-		} catch (IllegalArgumentException ex) {
-			player = plugin.getServer().getPlayerExact(userName);
-		}
+		Player player = plugin.getServer().getPlayerExact(userName);
 
 		if (player == null) {
 			sender.sendMessage(ChatColor.RED + "Player not found (offline?)");

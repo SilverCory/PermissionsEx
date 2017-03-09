@@ -18,13 +18,6 @@
  */
 package ru.tehkode.permissions.bukkit.commands;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -39,6 +32,8 @@ import ru.tehkode.permissions.commands.CommandListener;
 import ru.tehkode.permissions.commands.CommandsManager;
 import ru.tehkode.permissions.commands.exceptions.AutoCompleteChoicesException;
 import ru.tehkode.utils.StringUtils;
+
+import java.util.*;
 
 public abstract class PermissionsCommand implements CommandListener {
 	protected CommandsManager manager;
@@ -85,10 +80,7 @@ public abstract class PermissionsCommand implements CommandListener {
 	private String nameToUUID(String name) {
 		OfflinePlayer player = Bukkit.getServer().getOfflinePlayer(name);
 		if (player != null) {
-			UUID uid = player.getUniqueId();
-			if (uid != null) {
-				return uid.toString();
-			}
+			return player.getName();
 		}
 		return name;
 	}

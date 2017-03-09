@@ -18,19 +18,12 @@
  */
 package ru.tehkode.permissions;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TimerTask;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.permissions.Permission;
 import ru.tehkode.permissions.events.PermissionEntityEvent;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author code
@@ -731,7 +724,7 @@ public abstract class PermissionEntity {
 	}
 
 	protected void callEvent(PermissionEntityEvent.Action action) {
-		this.callEvent(new PermissionEntityEvent(manager.getServerUUID(), this, action));
+		this.callEvent(new PermissionEntityEvent(null, this, action));
 	}
 
 	@Override

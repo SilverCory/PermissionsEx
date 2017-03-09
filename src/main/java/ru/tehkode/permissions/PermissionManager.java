@@ -67,10 +67,6 @@ public class PermissionManager {
 		this.initBackend();
 	}
 
-	UUID getServerUUID() {
-		return nativeI.getServerUUID();
-	}
-
 	public boolean shouldCreateUserRecords() {
 		return config.createUserRecords();
 	}
@@ -103,7 +99,7 @@ public class PermissionManager {
 	 * @return true on success false otherwise
 	 */
 	public boolean has(Player player, String permission) {
-		return this.has(player.getUniqueId(), permission, player.getWorld().getName());
+		return this.has(player.getName(), permission, player.getWorld().getName());
 	}
 
 	/**
@@ -115,7 +111,7 @@ public class PermissionManager {
 	 * @return true on success false otherwise
 	 */
 	public boolean has(Player player, String permission, String world) {
-		return this.has(player.getUniqueId(), permission, world);
+		return this.has(player.getName(), permission, world);
 	}
 
 	/**
@@ -144,42 +140,12 @@ public class PermissionManager {
 	 * @param world      world's name as string
 	 * @return true on success false otherwise
 	 */
-	public boolean has(UUID playerId, String permission, String world) {
+	/*public boolean has(UUID playerId, String permission, String world) {
 		PermissionUser user = this.getUser(playerId);
 
 		return user != null && user.has(permission, world);
 
-	}
-
-	/**
-	 * Return user's object
-	 *
-	 * @param username get PermissionUser with given name
-	 * @return PermissionUser instance
-	 */
-	public PermissionUser getUser(String username) {
-		if (username == null || username.isEmpty()) {
-			throw new IllegalArgumentException("Null or empty name passed! Name must not be empty");
-		}
-
-		try {
-			if (username.length() != 36) { // Speedup for things def not uuids
-				throw new IllegalArgumentException("not a uuid, try stuff");
-			}
-			return getUser(UUID.fromString(username)); // Username is uuid as string, just use it
-		} catch (IllegalArgumentException ex) {
-			UUID userUUID = nativeI.nameToUUID(username);
-			boolean online = userUUID != null && nativeI.isOnline(userUUID);
-
-			if (userUUID != null && (nativeI.isOnline(userUUID) || backend.hasUser(userUUID.toString()))) {
-				return getUser(userUUID.toString(), username, online);
-			} else {
-				// The user is offline and unconverted, so we'll just have to return an unconverted user.
-				return getUser(username, null, false);
-			}
-		}
-	}
-
+	}*/
 
 	/**
 	 * Update a user in cache. This method is thread-safe and should only be called in async phases of login.
@@ -198,16 +164,15 @@ public class PermissionManager {
 	 * @return PermissionUser instance
 	 */
 	public PermissionUser getUser(Player player) {
-		return this.getUser(player.getUniqueId().toString(), player.getName(), true);
+		return this.getUser(player.getName(), null, true);
 	}
 
-	public PermissionUser getUser(UUID uid) {
-		final String identifier = uid.toString();
+	public PermissionUser getUser(String name) {
+		final String identifier = name;
 		if (users.containsKey(identifier)) {
 			return getUser(identifier, null, false);
 		}
-		String fallbackName = nativeI.UUIDToName(uid);
-		return getUser(identifier, fallbackName, fallbackName != null);
+		return getUser(name, null, true);
 	}
 
 	private PermissionUser getUser(String identifier, String fallbackName, boolean store) {
@@ -370,13 +335,13 @@ public class PermissionManager {
 		}
 	}
 
-	public void clearUserCache(UUID uid) {
+	/*public void clearUserCache(UUID uid) {
 		PermissionUser user = this.getUser(uid);
 
 		if (user != null) {
 			user.clearCache();
 		}
-	}
+	}*/
 
 	/**
 	 * Clear cache for specified player
@@ -384,7 +349,7 @@ public class PermissionManager {
 	 * @param player
 	 */
 	public void clearUserCache(Player player) {
-		this.clearUserCache(player.getUniqueId());
+		this.clearUserCache(player.getName());
 	}
 
 	/**
@@ -698,7 +663,7 @@ public class PermissionManager {
 	}
 
 	protected void callEvent(PermissionSystemEvent.Action action) {
-		this.callEvent(new PermissionSystemEvent(getServerUUID(), action));
+		this.callEvent(new PermissionSystemEvent(null, action));
 	}
 
 	public PermissionMatcher getPermissionMatcher() {

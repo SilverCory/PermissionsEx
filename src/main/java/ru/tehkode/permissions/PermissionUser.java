@@ -522,11 +522,7 @@ public class PermissionUser extends PermissionEntity {
 	}
 
 	public Player getPlayer() {
-		try {
-			return Bukkit.getServer().getPlayer(UUID.fromString(getIdentifier()));
-		} catch (Throwable ex) { // Not a UUID or method not implemented in server build
-			return Bukkit.getServer().getPlayerExact(getIdentifier());
-		}
+		return Bukkit.getServer().getPlayerExact(getIdentifier());
 	}
 
 	@Override
